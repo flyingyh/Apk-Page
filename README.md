@@ -66,4 +66,4 @@ manifestPlaceholders = [UMENG_CHANNEL_CALUE:"umeng"]
 
     productFlavors.all{
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
-    }
+    } 
