@@ -49,11 +49,23 @@ manifestPlaceholders = [UMENG_CHANNEL_CALUE:"umeng"]
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
-            signingConfig signingConfigs.release
-        }
+            signingConfig signingConfigs.release //为我们的apk指定要签名文件
+            
+             //指定我们release包的输出文件名就是我们的渠道名字
+            applicationVariants.all{ variant ->
+                variant.outputs.each{ output ->
+                    def outFile = output.outputFile
+                    if(outFile != null && outFile.name.endsWith(".apk")){
+                        def fileName = "${variant.productFlavor[0].name}"+".apk"
+                        output.outputFile = new File(outFile.parent,fileName);
+                    }
+                }
+            }
+        }
     }
 
-    productFlavors{
+    //真正的多渠道脚本支持
+    productFlavors{
         xiaomi{
 //            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "xiaomi"]
 //            resValue "string","app_name","xiaomi_app"
@@ -61,6 +73,11 @@ manifestPlaceholders = [UMENG_CHANNEL_CALUE:"umeng"]
         wandoujia{
 //            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
 //            resValue "string","app_name","wandoujia_app"
+        }
+        
+         baidu{
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "baidu"]
+//            resValue "string","app_name","baidu_app"
         }
     }
 
